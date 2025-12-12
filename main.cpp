@@ -24,7 +24,7 @@ int main () {
         cin >> c;
         cin.ignore();
         if (c == 'y' || c == 'Y'){
-            cout << "Enter filename (myqr.txt) to save QR code : " << endl;
+            cout << "Enter filename to save (for example myqr.txt): " << endl;
             string fileName;
             getline(cin, fileName);
             if (fileName.size() == 0){
@@ -34,8 +34,9 @@ int main () {
         }
     }
     else if (choice == 2){
-        cout << "Enter filename to load (qr_output.txt): " << endl;
+        cout << "Enter filename to load (for example qr_output.txt): " << endl;
         string fileName;
+        getline(cin, fileName);
         if (fileName.size() == 0){
             fileName = "qr_output.txt";
         }
