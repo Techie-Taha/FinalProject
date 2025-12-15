@@ -89,7 +89,7 @@ void printImg(const vector<string> &grid){
 string imgtoBinary(const vector<string> &grid){
     string bits = "";
     for (int i = 0; i < grid.size(); i++){
-        for (int j = 0; i < grid[i].size();j++){
+        for (int j = 0; j < grid[i].size(); j++){
             if (grid[i][j] == '#'){
                 bits += '1';
             } 
