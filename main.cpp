@@ -14,7 +14,7 @@ int main () {
 
     int choice = 0;
     cin >> choice;
-    cin.ignore(); // This code was written with the aid of ChatGPT; when prompted 'how to fix input buffering?'the generated text helped me write the this line of code: accessed: Dec. 2025
+    cin.ignore(); // This line of code was written with the aid of ChatGPT; when prompted 'how to fix input buffering?'the generated text helped me write the this line of code: accessed: Dec. 2025
     if (choice == 1){
 
         qr.encodeFromUserInput();  // This funsction will ask the user for input, which will be converted into binary
@@ -59,7 +59,7 @@ int main () {
             qr.decodeQr();
         }
     }
-    else{
+    else {
         cout << "Invalid choice." << endl;
     }
 
