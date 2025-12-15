@@ -57,7 +57,7 @@ vector<string> binarytoImg(const string &binary){
     vector<string> rows(size);
     int x = 0;
     for (int i = 0; i < size; i++){
-        for (int j = 0; i < size; j++){
+        for (int j = 0; j < size; j++){
             if (x < length){
                 if (binary.at(x) == '1'){
                     rows.at(i) += '#';
@@ -80,17 +80,17 @@ vector<string> binarytoImg(const string &binary){
 // It uses # for 1, and 0 for spaces to form QR alike shape.
 
 
-void printImg(const vector<string> &img){
-    for (unsigned int i = 0; i < img.size(); i++){
-        cout << img.at(i) << endl;
+void printImg(const vector<string> &grid){
+    for (unsigned int i = 0; i < grid.size(); i++){
+        cout << grid.at(i) << endl;
     }
 }
 
-string imgtoBinary(const vector<string> &img){
+string imgtoBinary(const vector<string> &grid){
     string bits = "";
-    for (int i = 0; i < img.size(); i++){
-        for (int j = 0; i < img[i].size();j++){
-            if (img[i][j] == '#'){
+    for (int i = 0; i < grid.size(); i++){
+        for (int j = 0; i < grid[i].size();j++){
+            if (grid[i][j] == '#'){
                 bits += '1';
             } 
             else {
@@ -101,6 +101,46 @@ string imgtoBinary(const vector<string> &img){
             return bits;
     }
 
+string binarytoText(const string &binary){
+    string text = "";
+    int value = 0;
+    int count = 0;
+    for (int i = 0; i < binary.length(); i++){
+        value = value*2;
+
+        if (binary.at(i) == '1'){
+            value = value + 1;
+        }
+        count = count + 1;
+
+        if (count == 8){
+            text += char(value);
+            value = 0;
+            count = 0;
+        }
+    }
+    return text;
+}
+// Here's how the code runs: Once the loop starts, it goes through each of the binary string character at a time, the value*2 works because this shifts the current number to the left once it multiplied by 2.
+// if the current binary is = '1', one is added to the current value. At the end value and count is equal to 0 because resetting the number is important, so the next character can be calculated. 
+
+
+
+/* -----
+This code was written with the aid of ChatGPT;
+when prompted 'how do I remove extra spaces and newlines from the END of a string?'
+the generated text helped me write the following code:
+accessed: Aug. 2025
+ -------- */
+
+ string rtrim(const string &s){
+    string result = s;
+
+    while (!result.empty() && result.back() == ' '){
+        result.pop_back();
+    }
+    return result;
+ }
 
 
 
