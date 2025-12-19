@@ -142,6 +142,108 @@ accessed: Aug. 2025
     return result;
  }
 
+ QRCode::QRCode() {
+    message = "";
+    binaryData = "";
+    grid.clear();  // This line of code was written with the aid of ChatGPT; when prompted 'how to remove all stored QR rows so the vector is empty and ready to store new data?'the generated text helped me write the this line of code: accessed: Dec. 2025
+    checksum = 0;
+
+ }
+
+ void QRCode::explainSignature() {
+    cout << endl << "Here is the explantion of the signature:" << endl;
+    cout << "This program has a unique signature, which is: [[TAHA_SIG_v11]]" << endl;
+    cout << "The signature appears as the first and last line of of the saved file." << endl;
+    cout << "To help the decoder to verify the message, A CHECKSUM line is also saved" << endl;
+    cout << "These lines of code will not affect decoding because these lines are not part of the grid." << endl;
+    cout << endl;
+
+
+ }
+/* -----
+This code was written with the aid of ChatGPT;
+when prompted 'how to write a function that loads a QR code from a file, verifies signature and reads the checksum?'
+the generated text helped me write the following code:
+accessed: Aug. 2025
+ -------- */
+ bool QRCode::loadFromFile(const string &filename){
+    ifstream file(filename);
+    if (!file){
+        cout << "Error: could not open file." << endl;
+        return false;
+    }
+
+    string signature = "[[TAHA_SIG_v11]]";
+    string line;
+
+    getline(file, line);
+    line = rtrim(line);
+    if (line != signature){
+        cout << "Error: The QR file is invalid." << endl;
+        return false;
+
+    }
+
+    getline(file, line);
+    line = rtrim(line);
+    int initialChecksum = 0;
+    for (int i = 9; i < line.length(); i++){
+        if (line.at(i) >= '0' && line.at(i) <= '9'){
+            initialChecksum = initialChecksum * 10 + (line.at(i) - '0');
+        }
+    }
+
+    vector<string> loadedGrid;
+
+    while (getline(file, line)){
+        if (rtrim(line) == signature){
+            break;
+        }
+        loadedGrid.push_back(line);
+    }
+
+    if (loadedGrid.size() == 0){
+        cout << "Error: No QR code found, try again!!" << endl;
+        return false;
+    }
+    grid = loadedGrid;
+    checksum = initialChecksum;
+
+    cout << "QR code loaded successfully" << endl;
+    return true;
+
+ }
+
+ void QRCode::decodeQr(){
+    if (grid.size() == 0){
+        cout << "No grid loaded to decode" << endl;
+        return;
+    }
+        string bits = imgtoBinary(grid);
+
+        string decodedMessage = binarytoText(bits);
+        int decodedChecksum = calculatetheCheckSum(decodedMessage);
+
+        cout << endl;
+
+        cout << "Decoded message:" << endl;
+
+        cout << decodedMessage << endl;
+        cout << endl;
+        cout << "Saved checksum: " << checksum << endl;
+        cout << "Decoded checksum: " << decodedChecksum << endl;
+
+        if (checksum == decodedChecksum){
+            cout << "Checksum verification: PASSED" << endl;
+
+        }
+        else {
+            cout << "Checksum verification: FAILED" << endl;
+        }
+    }
+ 
+
+
 
 
 
