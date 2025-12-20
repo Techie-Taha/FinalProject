@@ -186,10 +186,10 @@ accessed: Aug. 2025
 
     getline(file, line);
     line = rtrim(line);
-    int initialChecksum = 0;
+    int loadedChecksum = 0;
     for (int i = 9; i < line.length(); i++){
-        if (line.at(i) >= '0' && line.at(i) <= '9'){
-            initialChecksum = initialChecksum * 10 + (line.at(i) - '0');
+        if (line[i] >= '0' && line[i] <= '9'){
+            loadedChecksum = loadedChecksum * 10 + (line[i] - '0');
         }
     }
 
@@ -207,7 +207,7 @@ accessed: Aug. 2025
         return false;
     }
     grid = loadedGrid;
-    checksum = initialChecksum;
+    checksum = loadedChecksum;
 
     cout << "QR code loaded successfully" << endl;
     return true;
